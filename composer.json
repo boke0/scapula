@@ -1,0 +1,26 @@
+{
+    "name": "boke0/scapula",
+    "description": "PSR15のRequest Handlerインターフェースを実装したライブラリです。",
+    "type": "library",
+    "require": {
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "木瓜丸",
+            "email": "boke0@eugensite.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload":{
+        "psr-4":{
+            "Boke0\\Scapula\\":"src/",
+            "Boke0\\Scapula\\Test\\":"test/"
+        }
+    }
+}
