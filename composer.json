@@ -4,10 +4,12 @@
     "type": "library",
     "require": {
         "psr/http-server-handler": "^1.0",
-        "psr/http-server-middleware": "^1.0"
+        "psr/http-server-middleware": "^1.0",
+        "psr/container": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "mockery/mockery": "^1.3"
     },
     "license": "GPL",
     "authors": [
@@ -19,7 +21,11 @@
     "minimum-stability": "stable",
     "autoload":{
         "psr-4":{
-            "Boke0\\Scapula\\":"src/",
+            "Boke0\\Scapula\\":"src/"
+        }
+    },
+    "autoload-dev":{
+        "psr-4":{
             "Boke0\\Scapula\\Test\\":"test/"
         }
     }
