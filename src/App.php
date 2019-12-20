@@ -7,7 +7,7 @@ use \Psr\Http\Message\ServerRequestInterface;
 use \Psr\Http\Message\ResponseInterface;
 use \Psr\Container\ContainerInterface;
 
-class Http implements RequestHandlerInterface{
+class App implements RequestHandlerInterface{
     public function __construct(
         ContainerInterface $container
     ){
