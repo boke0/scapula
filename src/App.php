@@ -46,4 +46,13 @@ class App implements RequestHandlerInterface{
                     ->withParsedBody($post)
                     ->withUploadedFiles($files);
     }
+    public function run(){
+        $res=$this->handler();
+        $headers=$res->getHeaders();
+        $body=$res->getBody()->getContents();
+        foreach($headers as $key=>$value){
+            header($key.":".implode(",",$value));
+        }
+        echo $body;
+    }
 }
