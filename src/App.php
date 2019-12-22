@@ -4,14 +4,22 @@ namespace Boke0\Scapula;
 use \Psr\Http\Server\RequestHandlerInterface;
 use \Psr\Http\Server\MiddlewareInterface;
 use \Psr\Http\Message\ServerRequestInterface;
+use \Psr\Http\Message\ServerRequestFactoryInterface;
+use \Psr\Http\Message\UploadedFileFactoryInterface;
 use \Psr\Http\Message\ResponseInterface;
 use \Psr\Container\ContainerInterface;
 
 class App implements RequestHandlerInterface{
+    /**
+     * @param ServerRequestFactoryInterface $serverRequestFactory PSR17のサーバーリクエストファクトリ
+     * @param UploadedFileFactoryInterface $uploadedFileFactory PSR17のアップロードファイルファクトリ
+     */
     public function __construct(
-        ContainerInterface $container
+        ServerRequestFactoryInterface $serverRequestFactory;
+        UploadedFileFactoryInterface $uploadedFileFactory
     ){
-        $this->container=$container;
+        $this->serverRequestFactory=$serverRequestFactory;
+        $this->uploadedFileFactory=$uploadedFileFactory;
         $this->pipeline=new Pipeline();
     }
     public function pipe(MiddlewareInterface $middleware){
@@ -21,9 +29,7 @@ class App implements RequestHandlerInterface{
         return $this->pipeline->handle($req);
     }
     public function requestFromGlobals(){
-        $serverRequestFactory=$this->container->get("ServerRequestFactory");
-        $uploadedFileFactory=$this->container->get("UploadedFileFactory");
-        $req=$serverRequestFactory->createServerRequest(
+        $req=$this->serverRequestFactory->createServerRequest(
             $_SERVER["REQUEST_METHOD"],
             $_SERVER["REQUEST_URI"],
             $_SERVER
@@ -43,7 +49,7 @@ class App implements RequestHandlerInterface{
         }
         $files=array();
         foreach((array)$_FILES as $name=>$value){
-            $files[$name]=$uploadedFileFactory->createUploadedFile($value);
+            $files[$name]=$this->uploadedFileFactory->createUploadedFile($value);
         }
         return $req->withCookieParams($_COOKIE)
                     ->withQueryParams($_GET)
