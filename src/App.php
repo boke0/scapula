@@ -23,7 +23,11 @@ class App implements RequestHandlerInterface{
     public function requestFromGlobals(){
         $serverRequestFactory=$this->container->get("ServerRequestFactory");
         $uploadedFileFactory=$this->container->get("UploadedFileFactory");
-        $req=$serverRequestFactory->createServerRequest()->withServerParams($_SERVER);
+        $req=$serverRequestFactory->createServerRequest(
+            $_SERVER["REQUEST_METHOD"],
+            $_SERVER["REQUEST_URI"],
+            $_SERVER
+        );
         $serverParams=$req->getServerParams();
         if($serverParams["REQUEST_METHOD"]!="GET"){
             switch($serverParams["Content-Type"]){
