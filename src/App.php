@@ -15,7 +15,7 @@ class App implements RequestHandlerInterface{
      * @param UploadedFileFactoryInterface $uploadedFileFactory PSR17のアップロードファイルファクトリ
      */
     public function __construct(
-        ServerRequestFactoryInterface $serverRequestFactory;
+        ServerRequestFactoryInterface $serverRequestFactory,
         UploadedFileFactoryInterface $uploadedFileFactory
     ){
         $this->serverRequestFactory=$serverRequestFactory;
