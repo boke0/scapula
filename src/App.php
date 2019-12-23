@@ -47,12 +47,13 @@ class App implements RequestHandlerInterface{
         }else{
             $post=NULL;
         }
+        parse_str($req->getUri()->getQuery(),$querystring);
         $files=array();
         foreach((array)$_FILES as $name=>$value){
             $files[$name]=$this->uploadedFileFactory->createUploadedFile($value);
         }
         return $req->withCookieParams($_COOKIE)
-                    ->withQueryParams($_GET)
+                    ->withQueryParams($querystring)
                     ->withParsedBody($post)
                     ->withUploadedFiles($files);
     }
