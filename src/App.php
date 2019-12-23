@@ -26,7 +26,7 @@ class App implements RequestHandlerInterface{
         $this->pipeline->pipe($middleware);
     }
     public function handle(ServerRequestInterface $request): ResponseInterface{
-        return $this->pipeline->handle($req);
+        return $this->pipeline->handle($request);
     }
     public function requestFromGlobals(){
         $req=$this->serverRequestFactory->createServerRequest(
