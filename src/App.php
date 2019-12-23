@@ -57,7 +57,7 @@ class App implements RequestHandlerInterface{
                     ->withUploadedFiles($files);
     }
     public function run(){
-        $res=$this->handler();
+        $res=$this->handle();
         $headers=$res->getHeaders();
         $body=$res->getBody()->getContents();
         foreach($headers as $key=>$value){
