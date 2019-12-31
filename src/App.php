@@ -62,7 +62,7 @@ class App implements RequestHandlerInterface{
         $headers=$res->getHeaders();
         $body=$res->getBody()->getContents();
         foreach($headers as $key=>$value){
-            header($key.":".implode(",",$value));
+            header($key.":".implode(",",(array)$value));
         }
         echo $body;
     }
