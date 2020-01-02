@@ -36,12 +36,12 @@ class App implements RequestHandlerInterface{
         );
         $serverParams=$req->getServerParams();
         if($serverParams["REQUEST_METHOD"]!="GET"){
-            switch($serverParams["Content-Type"]){
+            switch($serverParams["CONTENT_TYPE"]){
                 case "application/json":
                     $post=json_decode($req->getBody()->getContents());
                     break;
                 case "application/x-www-form-urlencoded":
-                    $post=parse_str($req->getBody()->getContents());
+                    parse_str($req->getBody()->getContents(),$post);
                     break;
             }
         }else{
