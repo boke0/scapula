@@ -13,13 +13,16 @@ class App implements RequestHandlerInterface{
     /**
      * @param ServerRequestFactoryInterface $serverRequestFactory PSR17のサーバーリクエストファクトリ
      * @param UploadedFileFactoryInterface $uploadedFileFactory PSR17のアップロードファイルファクトリ
+     * @param StreamFactoryInterface $streamFactory PSR17のメディアストリームファクトリ
      */
     public function __construct(
         ServerRequestFactoryInterface $serverRequestFactory,
-        UploadedFileFactoryInterface $uploadedFileFactory
+        UploadedFileFactoryInterface $uploadedFileFactory,
+        StreamFactoryInterface $streamFileFactory
     ){
         $this->serverRequestFactory=$serverRequestFactory;
         $this->uploadedFileFactory=$uploadedFileFactory;
+        $this->streamFactory=$streamFactory;
         $this->pipeline=new Pipeline();
     }
     public function pipe(MiddlewareInterface $middleware){
@@ -50,7 +53,13 @@ class App implements RequestHandlerInterface{
         parse_str($req->getUri()->getQuery(),$querystring);
         $files=array();
         foreach((array)$_FILES as $name=>$value){
-            $files[$name]=$this->uploadedFileFactory->createUploadedFile($value);
+            $files[$name]=$this->uploadedFileFactory->createUploadedFile(
+                $this->streamFactory->createStreamFromFile($value["tmp_name"]),
+                $value["size"],
+                $value["error"],
+                $value["name"],
+                $value["type"]
+            );
         }
         return $req->withCookieParams($_COOKIE)
                     ->withQueryParams($querystring)
