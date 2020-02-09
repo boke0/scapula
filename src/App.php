@@ -19,7 +19,7 @@ class App implements RequestHandlerInterface{
     public function __construct(
         ServerRequestFactoryInterface $serverRequestFactory,
         UploadedFileFactoryInterface $uploadedFileFactory,
-        StreamFactoryInterface $streamFileFactory
+        StreamFactoryInterface $streamFactory
     ){
         $this->serverRequestFactory=$serverRequestFactory;
         $this->uploadedFileFactory=$uploadedFileFactory;
